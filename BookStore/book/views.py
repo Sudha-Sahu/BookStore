@@ -5,7 +5,7 @@ from .models import Book
 from django.contrib.auth.models import User
 from .serializer import BookSerializer, BookListSerializer, GetBookSerializer
 from django.core.paginator import Paginator
-from utils import encode_token, decode_token
+from utils import decode_token
 from .validate import book_validator
 
 
@@ -13,24 +13,6 @@ class BookAPIView(GenericAPIView):
     serializer_class = BookSerializer
     permission_classes = ()
     authentication_classes = ()
-
-    # def post(self, request):
-    #     user_id = decode_token(request)
-    #     print(user_id)
-    #     user = User.objects.get(pk=user_id)
-    #     if not user.is_superuser:
-    #         return Response({"error": " Only Admin is allowed", "code": 404})
-    #     new_book = request.data
-    #     serializer = BookSerializer(data=new_book)
-    #     if not serializer.is_valid():
-    #         print(serializer.data.get('id'))
-    #         book = Book.objects.get(id=serializer.data.get('id'))
-    #         book.quantity_now = book.quantity_now + int(request.data.get('quantity'))
-    #         print(book.quantity_now)
-    #         book.save()
-    #         return Response({'Message': "more book added", 'Code': 200})
-    #     serializer.save()
-    #     return Response({'Message': 'New book Added', 'Code': 200})
 
     def post(self, request):
         user_id = decode_token(request)
